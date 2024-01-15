@@ -7,7 +7,6 @@ using UnityEngine.EventSystems;
 public class GameManager : MonoBehaviour
 {
     public Transform player;
-    public Transform look;
     public float power;
     private Rigidbody2D playerRigid;
     private LineRenderer lineRenderer;
@@ -24,13 +23,14 @@ public class GameManager : MonoBehaviour
         Vector2 mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
         Vector2 playerPos = player.position;
         jumpVec = mousePos - playerPos;
+        power = jumpVec.magnitude*4;
         lineRenderer.SetPosition(0,mousePos);
         lineRenderer.SetPosition(1,playerPos);
         
     }
 
 
-    private void OnMouseDown()
+    public void Jump()
     {
         Debug.Log("11");
         jumpVec.Normalize();
