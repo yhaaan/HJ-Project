@@ -23,11 +23,12 @@ public class Player : MonoBehaviour
     }
     private void Update()
     {
+        Camera.main.transform.position = new Vector3(18, transform.position.y+2, -10);
         mousePosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
         direction = mousePosition - (Vector2)transform.position;
     }
 
-    private void OnCollisionEnter2D(Collision2D other)
+    private void OnCollisionStay2D(Collision2D other)
     {
         if (transform.position.y > other.transform.position.y)
         {
