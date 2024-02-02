@@ -7,7 +7,6 @@ using UnityEngine.UI;
 public class Player : MonoBehaviour
 {
     public Text powerText;
-    public int TESTJUMPMODE = 1;
     public GameObject[] jumpSkills;
     public float jumpForce = 10.0f;
     public int maxJumpCount = 1;
@@ -19,11 +18,10 @@ public class Player : MonoBehaviour
     private void Start()
     {
         playerRigidbody = GetComponent<Rigidbody2D>();
-        JumpModeChange(TESTJUMPMODE);
     }
     private void Update()
     {
-        Camera.main.transform.position = new Vector3(18, transform.position.y+2, -10);
+        
         mousePosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
         direction = mousePosition - (Vector2)transform.position;
     }
@@ -54,15 +52,6 @@ public class Player : MonoBehaviour
         }
     }
 
-    public void JumpModeChange(int modeNum)
-    {
-        foreach (var jumpSkill in jumpSkills) 
-        { 
-            if (jumpSkill == jumpSkills[TESTJUMPMODE]) 
-                jumpSkill.SetActive(true);
-            else jumpSkill.SetActive(false);
-        }
-            
-    }
+   
 
 }
