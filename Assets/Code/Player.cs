@@ -103,7 +103,7 @@ public class Player : MonoBehaviour
     {
         if (transform.position.y > other.transform.position.y)
         {
-            if (other.collider.CompareTag("Ground"))
+            if (other.collider.CompareTag("Block"))
             {
                 if (jumpCount < maxJumpCount)
                 {

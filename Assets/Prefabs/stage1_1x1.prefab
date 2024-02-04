@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 8572820286641890183}
   m_Layer: 0
   m_Name: stage1_1x1
-  m_TagString: Ground
+  m_TagString: Block
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -143,6 +143,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b698a29eddb2550428d89a221feb76cc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  images:
+  blockSprites:
   - {fileID: 454015024, guid: 22f01316daa12aa45980f0bc65cc4eed, type: 3}
   - {fileID: 1475054215, guid: 22f01316daa12aa45980f0bc65cc4eed, type: 3}
+  blockMaterials:
+  - {fileID: 6200000, guid: 6a2a103871ad6e64f84450f8521b2cc0, type: 2}
+  - {fileID: 6200000, guid: baa3f77a940b42c4ba0b6acee9c7a9e3, type: 2}
