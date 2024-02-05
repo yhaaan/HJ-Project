@@ -95,4 +95,14 @@ public class Player : MonoBehaviour
             AudioManager.instance.PlaySfx(AudioManager.Sfx.Jump);
         }
     }
+
+
+    public void TESTZONE()
+    {
+        gameObject.transform.position = new Vector3(3, -4, 0);
+    }
+    public void TESTTelpo()
+    {
+        gameObject.transform.position = transform.position + new Vector3(0,10,0);
+    }
 }
