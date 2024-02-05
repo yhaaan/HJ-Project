@@ -5,7 +5,6 @@ using UnityEngine.UI;
 
 public class Jump : MonoBehaviour
 {
-    private Player player;
     public float maxChargeTime = 1.0f;
     public float power = 0.0f;
     private float chargeTime;
@@ -14,31 +13,36 @@ public class Jump : MonoBehaviour
 
     private void Start()
     {
-        player = GetComponentInParent<Player>();
+        
         chargeIndicator.enabled = false;
     }
 
     private void Update()
     {
-        player.powerText.text = power.ToString("N0");
+        Player.instance.animator.SetBool("isCharging",isCharging);
+        Player.instance.powerText.text = power.ToString("N0");
 
-        if (Input.GetMouseButtonDown(0) && player.jumpCount > 0)
+        if (Input.GetMouseButtonDown(0) && Player.instance.jumpCount > 0)
         {
             isCharging = true;
             chargeTime = 0;
             chargeIndicator.enabled = true;
+            AudioManager.instance.PlaySfx(AudioManager.Sfx.StartCharging);
         }
 
         if (isCharging)
         {
+            
             chargeTime += Time.deltaTime;
             if (chargeTime > maxChargeTime)
             {
                 chargeTime = maxChargeTime;
+                //AudioManager.instance.PlaySfx(AudioManager.Sfx.FullCharging);
+                //풀자징시 효과음은 없는게 낫다고 판단
             }
 
             power = Mathf.FloorToInt((chargeTime / maxChargeTime) * 100);
-            player.powerText.text = power.ToString("N0");
+            Player.instance.powerText.text = power.ToString("N0");
 
             // 인디케이터 크기와 색상, 위치 변경
             UpdateChargeIndicatorSizeAndColor();
@@ -48,7 +52,15 @@ public class Jump : MonoBehaviour
         if (Input.GetMouseButtonUp(0) && isCharging)
         {
             isCharging = false;
-            player.Jump(-1 * Mathf.Clamp(chargeTime / maxChargeTime, 0.1f, 1f));
+            Player.instance.Jump(-1 * Mathf.Clamp(chargeTime / maxChargeTime, 0.1f, 1f));
+            power = 0;
+            chargeIndicator.enabled = false;
+        }
+        
+        //차징 취소
+        if (Input.GetMouseButtonDown(1) && isCharging)
+        {
+            isCharging = false;
             power = 0;
             chargeIndicator.enabled = false;
         }
@@ -56,7 +68,7 @@ public class Jump : MonoBehaviour
 
     private void UpdateChargeIndicatorPosition()
     {
-        Vector2 playerScreenPosition = Camera.main.WorldToScreenPoint(player.transform.position);
+        Vector2 playerScreenPosition = Camera.main.WorldToScreenPoint(Player.instance.transform.position);
         Vector2 mousePosition = Input.mousePosition;
         Vector2 direction = (mousePosition - playerScreenPosition).normalized;
         float distance = 60f; // 원 인디케이터와 플레이어 사이의 거리
