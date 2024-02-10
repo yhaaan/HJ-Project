@@ -10,6 +10,7 @@ public class HeightText : MonoBehaviour
     private void Awake()
     {
         heightText = GetComponent<Text>();
+        player = FindObjectOfType<Player>(); // Player 타입의 컴포넌트를 자동으로 찾습니다.
     }
 
     void Update()

@@ -16,7 +16,11 @@ public class Player : MonoBehaviour
     public Vector2 direction;
     private Vector2 mousePosition;
     private Rigidbody2D playerRigidbody;
-    
+    public float originalJumpForce;
+
+    //점프 블록 위에 있음
+    public bool onJumpBlock = false;
+
 
     // SpriteRenderer 변수 추가
     private SpriteRenderer spriteRenderer;
@@ -30,6 +34,8 @@ public class Player : MonoBehaviour
     private void Awake()
     {
         instance = this;
+        originalJumpForce = jumpForce;
+
     }
 
     private void Start()
@@ -45,7 +51,18 @@ public class Player : MonoBehaviour
 
     private void Update()
     {
-        
+        if (onJumpBlock)
+        {
+            // 시간에 따라 색상을 무지개색으로 변경
+            float colorValue = Mathf.PingPong(Time.time, 1f); // 0과 1 사이를 왕복
+            spriteRenderer.color = Color.HSVToRGB(colorValue, 0.3f, 1f);
+        }
+        else
+        {
+            // 점프 블록을 떠나면 원래 색상으로 복구
+            spriteRenderer.color = Color.white;
+        }
+
         mousePosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
         direction = mousePosition - (Vector2)transform.position;
         animator.SetFloat("Speed",playerRigidbody.velocity.y);
@@ -95,6 +112,24 @@ public class Player : MonoBehaviour
             AudioManager.instance.PlaySfx(AudioManager.Sfx.Jump);
         }
     }
+
+
+    public void EnableSticky(bool isSticky)
+{
+    if (isSticky)
+    {
+        // 점착 상태를 활성화하는 로직
+        // 예: Rigidbody2D의 velocity를 0으로 설정하여 움직임을 멈춤
+        this.GetComponent<Rigidbody2D>().velocity = Vector2.zero;
+        this.GetComponent<Rigidbody2D>().isKinematic = true; // 물리적 영향을 받지 않도록 설정
+    }
+    else
+    {
+        // 점착 상태를 비활성화하는 로직
+        // 예: Rigidbody2D의 isKinematic을 false로 설정하여 움직임을 다시 활성화
+        this.GetComponent<Rigidbody2D>().isKinematic = false;
+    }
+}
 
 
     public void TESTZONE()
