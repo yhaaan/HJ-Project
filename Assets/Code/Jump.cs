@@ -20,7 +20,7 @@ public class Jump : MonoBehaviour
     private void Update()
     {
         Player.instance.animator.SetBool("isCharging",isCharging);
-        Player.instance.powerText.text = power.ToString("N0");
+        
 
         if (Input.GetMouseButtonDown(0) && Player.instance.jumpCount > 0)
         {
@@ -42,7 +42,6 @@ public class Jump : MonoBehaviour
             }
 
             power = Mathf.FloorToInt((chargeTime / maxChargeTime) * 100);
-            Player.instance.powerText.text = power.ToString("N0");
 
             // 인디케이터 크기와 색상, 위치 변경
             UpdateChargeIndicatorSizeAndColor();

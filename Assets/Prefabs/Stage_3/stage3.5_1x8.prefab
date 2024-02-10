@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 3672713569039965558}
   - component: {fileID: 5227558649962204411}
   m_Layer: 0
-  m_Name: stage1_1x4
+  m_Name: stage3.5_1x8
   m_TagString: Block
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -28,7 +28,7 @@ Transform:
   m_GameObject: {fileID: 4921377001496046619}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 6.7, y: 6.08, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -75,12 +75,12 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: 21300000, guid: fd73b2c43bc212347be8a7973f66747c, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 8f105052387f8194b81dba9337cc25f9, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
-  m_Size: {x: 6.6666665, y: 1.6666666}
+  m_Size: {x: 4, y: 0.5}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
@@ -122,14 +122,14 @@ BoxCollider2D:
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 6.6666665, y: 1.6666666}
-    newSize: {x: 6.6666665, y: 1.6666666}
+    oldSize: {x: 4, y: 0.5}
+    newSize: {x: 4, y: 0.5}
     adaptiveTilingThreshold: 0.5
     drawMode: 0
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 4, y: 1}
+  m_Size: {x: 8, y: 1}
   m_EdgeRadius: 0
 --- !u!114 &5227558649962204411
 MonoBehaviour:
@@ -143,8 +143,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b698a29eddb2550428d89a221feb76cc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  blockType: 0
   blockSprites:
-  - {fileID: 21300000, guid: fd73b2c43bc212347be8a7973f66747c, type: 3}
+  - {fileID: 21300000, guid: 8f105052387f8194b81dba9337cc25f9, type: 3}
   blockMaterials:
   - {fileID: 6200000, guid: 6a2a103871ad6e64f84450f8521b2cc0, type: 2}
+  - {fileID: 6200000, guid: 852ab43c9918e07498c3ff21fbedba53, type: 2}
   - {fileID: 6200000, guid: baa3f77a940b42c4ba0b6acee9c7a9e3, type: 2}

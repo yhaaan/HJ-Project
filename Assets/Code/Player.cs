@@ -8,14 +8,13 @@ using UnityEngine.UI;
 public class Player : MonoBehaviour
 {
     public static Player instance;
-    public Text powerText;
     public GameObject[] jumpSkills;
-    public float jumpForce = 10.0f;
+    public float jumpForce = 30.0f;
     public int maxJumpCount = 1;
     public int jumpCount;
     public Vector2 direction;
     private Vector2 mousePosition;
-    private Rigidbody2D playerRigidbody;
+    public Rigidbody2D playerRigidbody;
     
 
     // SpriteRenderer 변수 추가
@@ -29,6 +28,7 @@ public class Player : MonoBehaviour
 
     private void Awake()
     {
+        jumpForce = 30f;
         instance = this;
     }
 
