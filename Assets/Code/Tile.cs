@@ -25,11 +25,15 @@ public class Tile : MonoBehaviour
     private bool isFading = false;
     private void Awake()
     {
+        
         int ran = Random.Range(0, blockSprites.Length);
         myImage = GetComponent<SpriteRenderer>();
         myImage.sprite = blockSprites[ran];
         coll = GetComponent<Collider2D>();
         ChangeType();
+        int filpRan = Random.Range(0, 2);
+        if (filpRan == 1) myImage.flipX = true;
+        else myImage.flipX = false;
 
     }
 
@@ -97,7 +101,7 @@ public class Tile : MonoBehaviour
         isFading = true;
 
         // 5초 동안 투명해지게 함
-        float fadeDuration = 1.2f;
+        float fadeDuration = 1.7f;
         float fadeSpeed = 1f / fadeDuration;
         float amount = 0;
 
@@ -113,7 +117,7 @@ public class Tile : MonoBehaviour
         coll.enabled = false;
 
         // 5초 대기
-        yield return new WaitForSeconds(5f);
+        yield return new WaitForSeconds(3f);
 
         // 다시 활성화 및 원래 상태로 복구
         myImage.enabled = true;
