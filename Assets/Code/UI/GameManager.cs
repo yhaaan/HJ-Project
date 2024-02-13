@@ -17,15 +17,20 @@ public class GameManager : MonoBehaviour
     [Header("UI")] 
     public TMP_Text timerText;
     public Image timerButton;
+    private TMP_Text timerButtonText;
     public TMP_Text heightText;
     public Image heightButton;
+    private TMP_Text heightButtonText;
     [Header("Setting")]
     public bool lookOutStatus = true;
-    public TMP_Text lookOutText;
     public Image lookOutButton;
-
+    private TMP_Text lookOutButtonText;
     private void Awake()
     {
+        
+        timerButtonText = timerButton.GetComponentInChildren<TMP_Text>();
+        heightButtonText = heightButton.GetComponentInChildren<TMP_Text>();
+        lookOutButtonText = lookOutButton.GetComponentInChildren<TMP_Text>();
         instance = this;
         isPlaying = true;
         setting.SetActive(false);
@@ -56,11 +61,13 @@ public class GameManager : MonoBehaviour
         if (timerText.alpha == 1f)
         {
             timerText.alpha = 0f;
+            timerButtonText.text = "OFF";
             timerButton.color = Color.gray;
         }
         else
         {
             timerText.alpha = 1f;
+            timerButtonText.text = "ON";
             timerButton.color = Color.white;
         }
 
@@ -72,11 +79,13 @@ public class GameManager : MonoBehaviour
         if (heightText.alpha == 1f)
         {
             heightText.alpha = 0f;
+            heightButtonText.text = "OFF";
             heightButton.color = Color.gray;
         }
         else
         {
             heightText.alpha = 1f;
+            heightButtonText.text = "ON";
             heightButton.color = Color.white;
         }
     }
@@ -85,14 +94,14 @@ public class GameManager : MonoBehaviour
         if (lookOutStatus)
         {
             lookOutStatus = false;
-            lookOutText.text = "OFF";
+            lookOutButtonText.text = "OFF";
             lookOutButton.color = Color.gray;
 
         }
         else
         {
             lookOutStatus = true;
-            lookOutText.text = "ON";
+            lookOutButtonText.text = "ON";
             lookOutButton.color = Color.white;
         }
     }
