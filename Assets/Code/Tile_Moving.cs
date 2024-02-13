@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -11,7 +12,8 @@ public class Tile_Moving : MonoBehaviour
         X_Move,
         Y_Move
     }
-
+    
+    private SpriteRenderer sprite;
     public MoveType type;
     [Header("Setting")] 
     public float distance;
@@ -24,6 +26,8 @@ public class Tile_Moving : MonoBehaviour
 
     private void Awake()
     {
+        sprite = GetComponent<SpriteRenderer>();
+        
         oriX = transform.position.x;
         oriY = transform.position.y;
         desX = oriX + distance;
@@ -41,6 +45,17 @@ public class Tile_Moving : MonoBehaviour
             case MoveType.Y_Move:
                 transform.DOMoveY(desY, duration).SetLoops(-1,LoopType.Yoyo).SetEase(Ease.InOutSine);
                 break;
+        }
+    }
+
+    private void Update()
+    {
+        if (type == MoveType.X_Move)
+        {
+            if (transform.position.x < oriX+0.5f)
+                sprite.flipX = true;
+            else if(transform.position.x > desX-0.5f)
+                sprite.flipX = false;
         }
     }
 }

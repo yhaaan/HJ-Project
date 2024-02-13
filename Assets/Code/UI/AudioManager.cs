@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class AudioManager : MonoBehaviour
 {
@@ -10,18 +11,24 @@ public class AudioManager : MonoBehaviour
     [Header("#BGM")] 
     public AudioClip bgmClip;
     public float bgmVolume;
+    public Slider bgmSlider;
     private AudioSource bgmPlayer;
     
     [Header("#SFX")] 
     public AudioClip[] sfxClips;
     public float sfxVolume;
+    public Slider sfxSlider;
     public int channels;
     private AudioSource[] sfxPlayers;
     private int channelIndex;
     
+    
+    private bool changeable = false;
     public enum Sfx {Jump = 0 , StartCharging , FullCharging}
     private void Awake()
     {
+        sfxSlider.value = 0.2f;
+        bgmSlider.value = 0.2f;
         instance = this;
         Init();
         PlayBgm(true);
@@ -50,6 +57,8 @@ public class AudioManager : MonoBehaviour
             sfxPlayers[index].volume = sfxVolume;
 
         }
+
+        changeable = true;
     }
 
     public void PlayBgm(bool isPlay)
@@ -77,6 +86,25 @@ public class AudioManager : MonoBehaviour
             break;
         }
         
+    }
+
+    public void ChangeVolumeBgm()
+    {
+        if(changeable)
+            bgmPlayer.volume = bgmSlider.value;
+    }
+    
+    
+    
+    public void ChangeVolumeSfx()
+    {
+        if (changeable)
+        {
+            for (int index = 0; index < sfxPlayers.Length; index++)
+            {
+                sfxPlayers[index].volume = sfxSlider.value;
+            }
+        }
     }
     
 }

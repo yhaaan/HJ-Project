@@ -24,11 +24,13 @@ public class FixCamera : MonoBehaviour
 
     public void UpView(float y)
     {
-        dy += y;
+        if(GameManager.instance.lookOutStatus)
+            dy += y;
     }
     
     public void DownView(float y)
     {
-        dy -= y;
+        if(GameManager.instance.lookOutStatus) 
+            dy -= y;
     }
 }

@@ -8,8 +8,6 @@ using UnityEngine.UI;
 public class Player : MonoBehaviour
 {
     public static Player instance;
-    public Text powerText;
-    public GameObject[] jumpSkills;
     public float jumpForce = 10.0f;
     public int maxJumpCount = 1;
     public int jumpCount;
@@ -51,6 +49,10 @@ public class Player : MonoBehaviour
 
     private void Update()
     {
+        if (Input.GetKeyDown(KeyCode.Space))
+            TEST_TP();
+        if (!GameManager.instance.isPlaying)
+            return;
         if (onJumpBlock)
         {
             // 시간에 따라 색상을 무지개색으로 변경
@@ -130,14 +132,11 @@ public class Player : MonoBehaviour
         this.GetComponent<Rigidbody2D>().isKinematic = false;
     }
 }
-
-
-    public void TESTZONE()
+    
+    public void TEST_TP()
     {
-        gameObject.transform.position = new Vector3(3, -4, 0);
-    }
-    public void TESTTelpo()
-    {
-        gameObject.transform.position = transform.position + new Vector3(0,10,0);
+        Vector3 point = Camera.main.ScreenToWorldPoint(new Vector3(Input.mousePosition.x, 
+            Input.mousePosition.y, -Camera.main.transform.position.z));
+        gameObject.transform.position = point;
     }
 }

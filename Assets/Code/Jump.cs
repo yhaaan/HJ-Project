@@ -13,12 +13,13 @@ public class Jump : MonoBehaviour
 
     private void Start()
     {
-        
         chargeIndicator.enabled = false;
     }
 
     private void Update()
     {
+        if (!GameManager.instance.isPlaying)
+            return;
         Player.instance.animator.SetBool("isCharging",isCharging);
         
 
