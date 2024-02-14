@@ -27,7 +27,9 @@ public class GameManager : MonoBehaviour
     private TMP_Text lookOutButtonText;
     private void Awake()
     {
-        
+        // 1980x1080 해상도로 설정하고, 전체 화면 모드를 false로 설정합니다.
+        Screen.SetResolution(1980, 1080, false);
+
         timerButtonText = timerButton.GetComponentInChildren<TMP_Text>();
         heightButtonText = heightButton.GetComponentInChildren<TMP_Text>();
         lookOutButtonText = lookOutButton.GetComponentInChildren<TMP_Text>();
