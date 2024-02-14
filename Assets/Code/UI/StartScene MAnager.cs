@@ -7,17 +7,19 @@ public class StartSceneManager : MonoBehaviour
 {
     void Awake()
     {
-        // 1980x1080 ÇØ»óµµ·Î ¼³Á¤ÇÏ°í, ÀüÃ¼ È­¸é ¸ğµå¸¦ false·Î ¼³Á¤ÇÕ´Ï´Ù.
-        Screen.SetResolution(1980, 1080, false);
+        // 1980x1080 í•´ìƒë„ë¡œ ì„¤ì •í•˜ê³ , ì „ì²´ í™”ë©´ ëª¨ë“œë¥¼ falseë¡œ ì„¤ì •í•©ë‹ˆë‹¤.
+        Screen.SetResolution(1366, 768, false);
     }
 
     public void LoadGameScene()
     {
-        SceneManager.LoadScene("GameScene"); 
+         ChangeScene.instance.RunFade();
+         SceneManager.LoadScene("GameScene"); 
     }
 
     public void QuitGame()
     {
+        ChangeScene.instance.RunFade();
         #if UNITY_EDITOR
             UnityEditor.EditorApplication.isPlaying = false;
         #else
@@ -25,4 +27,5 @@ public class StartSceneManager : MonoBehaviour
         Application.Quit();
         #endif
     }
+    
 }

@@ -5,36 +5,36 @@ using System.Net.Mime;
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
-using Button = UnityEngine.UIElements.Button;
+using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour
 {
     public static GameManager instance;
     public bool isPlaying = true;
-    
+    private bool isFullScreen;
+    private bool isHalfFhd;
     public GameObject setting;
 
-    [Header("UI")] 
-    public TMP_Text timerText;
+    [Header("UI")] public TMP_Text timerText;
     public Image timerButton;
-    private TMP_Text timerButtonText;
     public TMP_Text heightText;
     public Image heightButton;
-    private TMP_Text heightButtonText;
-    [Header("Setting")]
+    [Header("Setting")] 
     public bool lookOutStatus = true;
     public Image lookOutButton;
-    private TMP_Text lookOutButtonText;
+    public Image fullScreenButton;
+    public Image halfFhdScreenButton;
+
+
     private void Awake()
     {
         // 1980x1080 해상도로 설정하고, 전체 화면 모드를 false로 설정합니다.
-        Screen.SetResolution(1980, 1080, false);
-
-        timerButtonText = timerButton.GetComponentInChildren<TMP_Text>();
-        heightButtonText = heightButton.GetComponentInChildren<TMP_Text>();
-        lookOutButtonText = lookOutButton.GetComponentInChildren<TMP_Text>();
+        Screen.SetResolution(1366, 768, false);
+        
         instance = this;
         isPlaying = true;
+        isFullScreen = false;
+        isHalfFhd = false;
         setting.SetActive(false);
     }
 
@@ -63,13 +63,13 @@ public class GameManager : MonoBehaviour
         if (timerText.alpha == 1f)
         {
             timerText.alpha = 0f;
-            timerButtonText.text = "OFF";
+            //timerButtonText.text = "OFF";
             timerButton.color = Color.gray;
         }
         else
         {
             timerText.alpha = 1f;
-            timerButtonText.text = "ON";
+            //timerButtonText.text = "ON";
             timerButton.color = Color.white;
         }
 
@@ -77,49 +77,104 @@ public class GameManager : MonoBehaviour
 
     public void HeightSwitch()
     {
-        
+
         if (heightText.alpha == 1f)
         {
             heightText.alpha = 0f;
-            heightButtonText.text = "OFF";
+            //heightButtonText.text = "OFF";
             heightButton.color = Color.gray;
         }
         else
         {
             heightText.alpha = 1f;
-            heightButtonText.text = "ON";
+            //heightButtonText.text = "ON";
             heightButton.color = Color.white;
         }
     }
+
     public void LookOutSwitch()
     {
         if (lookOutStatus)
         {
             lookOutStatus = false;
-            lookOutButtonText.text = "OFF";
+            //lookOutButtonText.text = "OFF";
             lookOutButton.color = Color.gray;
 
         }
         else
         {
             lookOutStatus = true;
-            lookOutButtonText.text = "ON";
+            //lookOutButtonText.text = "ON";
             lookOutButton.color = Color.white;
         }
     }
 
     public void DragHeight()
     {
-        if(isPlaying)
+        if (isPlaying)
             return;
         heightText.transform.position =
             new Vector3(Input.mousePosition.x, Input.mousePosition.y, Input.mousePosition.z);
     }
+
     public void DragTimer()
     {
-        if(isPlaying)
+        if (isPlaying)
             return;
         timerText.transform.position =
             new Vector3(Input.mousePosition.x, Input.mousePosition.y, Input.mousePosition.z);
+    }
+
+    public void QuitGame()
+    {
+        #if UNITY_EDITOR
+                UnityEditor.EditorApplication.isPlaying = false;
+        #else
+
+                        Application.Quit();
+        #endif
+    }
+
+    public void LoadTitleScene()
+    {
+        isPlaying = true;
+        SceneManager.LoadScene("StartScene");
+    }
+
+    public void FullScreen()
+    {
+        if (isFullScreen)
+        {
+            isFullScreen = false;
+            if(isHalfFhd)
+                Screen.SetResolution(960, 540, false);
+            else
+                Screen.SetResolution(1366, 768, false);
+            fullScreenButton.color = Color.white;
+        }
+        else
+        {
+            isFullScreen = true;
+            Screen.SetResolution(1920, 1080, true);
+            fullScreenButton.color = Color.gray;
+        }
+    }
+    public void HalfFHD()
+    {
+
+        if (isHalfFhd)
+        {
+            Screen.SetResolution(1366, 768, false);
+            isHalfFhd = false;
+            halfFhdScreenButton.color = Color.white;
+        }
+        else
+        {
+            Screen.SetResolution(960, 540, false);
+            isHalfFhd = true;
+            halfFhdScreenButton.color = Color.gray;
+        }
+
+
     }
 }

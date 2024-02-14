@@ -6,7 +6,7 @@ public class NPCDialogue : MonoBehaviour
 {
     public GameObject dialogueTextObject; // 대화 텍스트 오브젝트
     public string dialogueText = "안녕하세요! NPC입니다."; // 표시할 대사
-    private Text dialogueTextComponent; // 대사를 표시할 Text 컴포넌트
+    public Text dialogueTextComponent; // 대사를 표시할 Text 컴포넌트
 
     private void Start()
     {

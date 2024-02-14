@@ -49,7 +49,7 @@ public class Player : MonoBehaviour
 
     private void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Space))
+        if (Input.GetKeyDown(KeyCode.T))
             TEST_TP();
         if (!GameManager.instance.isPlaying)
             return;
