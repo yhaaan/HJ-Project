@@ -38,4 +38,11 @@ public class Timer : MonoBehaviour
         timerText.text = time;
 
     }
+
+    public void ResetTime()
+    {
+        h = 0;
+        m = 0;
+        s = 0;
+    }
 }

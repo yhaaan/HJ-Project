@@ -28,6 +28,8 @@ public class FixCamera : MonoBehaviour
             dy += y;
     }
     
+    
+    //DownView :: 0216 부로 사용안함
     public void DownView(float y)
     {
         if(GameManager.instance.lookOutStatus) 

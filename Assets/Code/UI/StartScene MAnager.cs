@@ -13,13 +13,14 @@ public class StartSceneManager : MonoBehaviour
 
     public void LoadGameScene()
     {
-         ChangeScene.instance.RunFade();
+         
          SceneManager.LoadScene("GameScene"); 
+         //ChangeScene.instance.RunFade();
     }
 
     public void QuitGame()
     {
-        ChangeScene.instance.RunFade();
+        
         #if UNITY_EDITOR
             UnityEditor.EditorApplication.isPlaying = false;
         #else

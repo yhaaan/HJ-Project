@@ -10,8 +10,8 @@ GameObject:
   m_Component:
   - component: {fileID: 4364416497742331479}
   - component: {fileID: 2326909707805335617}
-  - component: {fileID: 5632163506201346762}
   - component: {fileID: 2806017995262980552}
+  - component: {fileID: 1255718877578749550}
   m_Layer: 0
   m_Name: acornRobot
   m_TagString: Untagged
@@ -86,8 +86,23 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!61 &5632163506201346762
-BoxCollider2D:
+--- !u!114 &2806017995262980552
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8769010651035665673}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 15bf7c454d14e574f9cdb416fcfe9d35, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  type: 0
+  distance: 25
+  duration: 2
+--- !u!68 &1255718877578749550
+EdgeCollider2D:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -119,30 +134,15 @@ BoxCollider2D:
   m_UsedByEffector: 0
   m_UsedByComposite: 0
   m_Offset: {x: 0, y: 0}
-  m_SpriteTilingProperty:
-    border: {x: 0, y: 0, z: 0, w: 0}
-    pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 1.6666666, y: 3.3333333}
-    newSize: {x: 1.6666666, y: 3.3333333}
-    adaptiveTilingThreshold: 0.5
-    drawMode: 0
-    adaptiveTiling: 0
-  m_AutoTiling: 0
-  serializedVersion: 2
-  m_Size: {x: 1, y: 2}
   m_EdgeRadius: 0
---- !u!114 &2806017995262980552
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8769010651035665673}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 15bf7c454d14e574f9cdb416fcfe9d35, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  type: 0
-  distance: 25
-  duration: 2
+  m_Points:
+  - {x: 0, y: 1.2}
+  - {x: -0.5, y: 1}
+  - {x: -0.5, y: -1}
+  - {x: 0.5, y: -1}
+  - {x: 0.5, y: 1}
+  - {x: 0, y: 1.2}
+  m_AdjacentStartPoint: {x: 0, y: 0}
+  m_AdjacentEndPoint: {x: 0, y: 0}
+  m_UseAdjacentStartPoint: 0
+  m_UseAdjacentEndPoint: 0

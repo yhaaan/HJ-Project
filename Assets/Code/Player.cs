@@ -51,6 +51,8 @@ public class Player : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.T))
             TEST_TP();
+        if (Input.GetKeyDown(KeyCode.R))
+            TEST_TP2();
         if (!GameManager.instance.isPlaying)
             return;
         if (onJumpBlock)
@@ -114,29 +116,48 @@ public class Player : MonoBehaviour
             AudioManager.instance.PlaySfx(AudioManager.Sfx.Jump);
         }
     }
-
-
-    public void EnableSticky(bool isSticky)
-{
-    if (isSticky)
-    {
-        // 점착 상태를 활성화하는 로직
-        // 예: Rigidbody2D의 velocity를 0으로 설정하여 움직임을 멈춤
-        this.GetComponent<Rigidbody2D>().velocity = Vector2.zero;
-        this.GetComponent<Rigidbody2D>().isKinematic = true; // 물리적 영향을 받지 않도록 설정
-    }
-    else
-    {
-        // 점착 상태를 비활성화하는 로직
-        // 예: Rigidbody2D의 isKinematic을 false로 설정하여 움직임을 다시 활성화
-        this.GetComponent<Rigidbody2D>().isKinematic = false;
-    }
-}
+    
     
     public void TEST_TP()
     {
+        
         Vector3 point = Camera.main.ScreenToWorldPoint(new Vector3(Input.mousePosition.x, 
             Input.mousePosition.y, -Camera.main.transform.position.z));
         gameObject.transform.position = point;
+        
     }
+
+    private int test = 0;
+    public void TEST_TP2()
+    {
+        if (test == 0)
+        {
+            gameObject.transform.position = new Vector3(16, 92, 0);
+        }
+        else if (test == 1)
+        {
+            gameObject.transform.position = new Vector3(16, 152, 0);
+        }
+        else if (test == 2)
+        {
+            gameObject.transform.position = new Vector3(16, 305, 0);
+        }
+        else if (test == 3)
+        {
+            gameObject.transform.position = new Vector3(16, 359, 0);
+        }
+        else if (test == 4)
+        {
+            gameObject.transform.position = new Vector3(16, 405, 0);
+        }
+        else if (test == 5)
+        {
+            gameObject.transform.position = new Vector3(16, 503, 0);
+            test = -1;
+        }
+
+        test++;
+        
+    }
+    
 }

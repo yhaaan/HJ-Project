@@ -14,11 +14,14 @@ public class GameManager : MonoBehaviour
     private bool isFullScreen;
     private bool isHalfFhd;
     public GameObject setting;
-
-    [Header("UI")] public TMP_Text timerText;
+    public GameObject gameStages;
+    public Player player;
+    [Header("UI")] 
+    public TMP_Text timerText;
     public Image timerButton;
     public TMP_Text heightText;
     public Image heightButton;
+    
     [Header("Setting")] 
     public bool lookOutStatus = true;
     public Image lookOutButton;
@@ -26,38 +29,52 @@ public class GameManager : MonoBehaviour
     public Image halfFhdScreenButton;
 
 
-    private void Awake()
+    private void Start()
     {
         // 1980x1080 해상도로 설정하고, 전체 화면 모드를 false로 설정합니다.
-        Screen.SetResolution(1366, 768, false);
-        
+        Screen.SetResolution(960, 540, false);
+        gameStages.SetActive(true);
         instance = this;
-        isPlaying = true;
+        isPlaying = false;
         isFullScreen = false;
         isHalfFhd = false;
+        GameStart();
+    }
+
+    public void GameStart()
+    {
+        
+        isPlaying = true;
         setting.SetActive(false);
+        player.transform.position = new Vector3(4, 6, 0);
+        timerText.GetComponent<Timer>().ResetTime();
+        FadeEffect.instance.RunFade();
     }
 
     private void Update()
     {
         if (Input.GetKeyDown(KeyCode.Escape))
         {
-            if (isPlaying)
-            {
-                isPlaying = false;
-                setting.SetActive(true);
-                Time.timeScale = 0;
-            }
-            else
-            {
-                isPlaying = true;
-                setting.SetActive(false);
-                Time.timeScale = 1;
-
-            }
+            Esc();
         }
     }
 
+    public void Esc()
+    {
+        if (isPlaying)
+        {
+            isPlaying = false;
+            setting.SetActive(true);
+            Time.timeScale = 0;
+        }
+        else
+        {
+            isPlaying = true;
+            setting.SetActive(false);
+            Time.timeScale = 1;
+
+        }
+    }
     public void TimerSwitch()
     {
         if (timerText.alpha == 1f)
@@ -135,9 +152,15 @@ public class GameManager : MonoBehaviour
         #endif
     }
 
-    public void LoadTitleScene()
+    public void ReStartGame()
     {
-        isPlaying = true;
+        Esc();
+        GameStart();
+    }
+
+    public void Title()
+    {
+        Esc();
         SceneManager.LoadScene("StartScene");
     }
 

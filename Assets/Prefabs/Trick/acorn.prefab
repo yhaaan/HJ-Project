@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 4680012334658274787}
   - component: {fileID: 6727416169243439798}
   - component: {fileID: 1922391609097033104}
-  - component: {fileID: -6397678085471591472}
+  - component: {fileID: 2390312976001168348}
   m_Layer: 0
   m_Name: acorn
   m_TagString: Untagged
@@ -101,8 +101,8 @@ MonoBehaviour:
   type: 0
   distance: 0
   duration: 0
---- !u!61 &-6397678085471591472
-BoxCollider2D:
+--- !u!68 &2390312976001168348
+EdgeCollider2D:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -134,15 +134,15 @@ BoxCollider2D:
   m_UsedByEffector: 0
   m_UsedByComposite: 0
   m_Offset: {x: 0, y: 0}
-  m_SpriteTilingProperty:
-    border: {x: 0, y: 0, z: 0, w: 0}
-    pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 1.6666666, y: 1.6666666}
-    newSize: {x: 1.6666666, y: 1.6666666}
-    adaptiveTilingThreshold: 0.5
-    drawMode: 0
-    adaptiveTiling: 0
-  m_AutoTiling: 0
-  serializedVersion: 2
-  m_Size: {x: 1, y: 1}
   m_EdgeRadius: 0
+  m_Points:
+  - {x: 0, y: 0.5}
+  - {x: -0.5, y: 0.4}
+  - {x: -0.5, y: -0.5}
+  - {x: 0.5, y: -0.5}
+  - {x: 0.5, y: 0.4}
+  - {x: 0, y: 0.5}
+  m_AdjacentStartPoint: {x: 0, y: 0}
+  m_AdjacentEndPoint: {x: 0, y: 0}
+  m_UseAdjacentStartPoint: 0
+  m_UseAdjacentEndPoint: 0

@@ -45,9 +45,10 @@ public class NPCDialogue : MonoBehaviour
     // Update 메서드에서 UI Text의 위치를 NPC 위로 동적으로 업데이트
     private void Update()
     {
+        
         if (dialogueTextObject.activeSelf)
         {
-            Vector3 screenPos = Camera.main.WorldToScreenPoint(transform.position + new Vector3(0, 2f, 0)); // NPC 위의 좌표
+            Vector3 screenPos = Camera.main.WorldToScreenPoint(transform.position + new Vector3(0, 0, 0)); // NPC 위의 좌표
             dialogueTextObject.transform.position = screenPos;
         }
     }
