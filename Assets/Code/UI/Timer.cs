@@ -7,9 +7,9 @@ public class Timer : MonoBehaviour
 {
     private string time;
     private TMP_Text timerText;
-    private int h;
-    private int m;
-    private float s;
+    public int h;
+    public int m;
+    public float s;
 
     private void Awake()
     {
@@ -44,5 +44,12 @@ public class Timer : MonoBehaviour
         h = 0;
         m = 0;
         s = 0;
+    }
+
+    public void SetTime(int sh,int sm, float ss)
+    {
+        h = sh;
+        m = sm;
+        s = ss;
     }
 }

@@ -12,7 +12,6 @@ public class GameManager : MonoBehaviour
     public static GameManager instance;
     public bool isPlaying = true;
     private bool isFullScreen;
-    private bool isHalfFhd;
     public GameObject setting;
     public GameObject gameStages;
     public Player player;
@@ -26,7 +25,9 @@ public class GameManager : MonoBehaviour
     public bool lookOutStatus = true;
     public Image lookOutButton;
     public Image fullScreenButton;
-    public Image halfFhdScreenButton;
+    public TMP_Text saveDataText;
+    public TMP_Text loadDataText;
+    public int loadCount;
 
 
     private void Start()
@@ -37,18 +38,21 @@ public class GameManager : MonoBehaviour
         instance = this;
         isPlaying = false;
         isFullScreen = false;
-        isHalfFhd = false;
+        
         GameStart();
     }
 
     public void GameStart()
     {
-        
+        loadCount = 0;
         isPlaying = true;
         setting.SetActive(false);
         player.transform.position = new Vector3(4, 6, 0);
         timerText.GetComponent<Timer>().ResetTime();
-        FadeEffect.instance.RunFade();
+        SaveDataTextUpdate();
+        LoadDataTextUpdate();
+        FadeEffect.instance.RunFade(Color.black);
+        
     }
 
     private void Update()
@@ -73,6 +77,34 @@ public class GameManager : MonoBehaviour
             setting.SetActive(false);
             Time.timeScale = 1;
 
+        }
+    }
+
+    public void SaveDataTextUpdate()
+    {
+        if (PlayerPrefs.HasKey("SaveCheck"))
+        {
+            int h = PlayerPrefs.GetInt("Time_h");
+            int m = PlayerPrefs.GetInt("Time_m");
+            float s = PlayerPrefs.GetFloat("Time_s");
+            int score = PlayerPrefs.GetInt("Score");
+            saveDataText.text = score + "층\n" + h + "h\n" + m + "m\n" + s.ToString("F1") + "s";
+        }
+        else
+        {
+            saveDataText.text = "없음";
+        }
+    }
+    public void LoadDataTextUpdate()
+    {
+        if (PlayerPrefs.HasKey("LoadCheck"))
+        {
+            loadCount = PlayerPrefs.GetInt("LoadCheck");
+            loadDataText.text = "파란나비의 도움 " + loadCount + " 번";
+        }
+        else
+        {
+            loadDataText.text = "파란나비의 도움은 필요없다";
         }
     }
     public void TimerSwitch()
@@ -155,6 +187,7 @@ public class GameManager : MonoBehaviour
     public void ReStartGame()
     {
         Esc();
+        PlayerPrefs.DeleteAll();
         GameStart();
     }
 
@@ -169,10 +202,7 @@ public class GameManager : MonoBehaviour
         if (isFullScreen)
         {
             isFullScreen = false;
-            if(isHalfFhd)
-                Screen.SetResolution(960, 540, false);
-            else
-                Screen.SetResolution(1366, 768, false);
+            Screen.SetResolution(960, 540, false);
             fullScreenButton.color = Color.white;
         }
         else
@@ -182,22 +212,42 @@ public class GameManager : MonoBehaviour
             fullScreenButton.color = Color.gray;
         }
     }
-    public void HalfFHD()
+    
+    public void Save()
     {
+        Timer timer = timerText.GetComponent<Timer>();
+        PlayerPrefs.SetInt("SaveCheck", 1);
+        PlayerPrefs.SetFloat("PlayerX", Player.instance.transform.position.x);
+        PlayerPrefs.SetFloat("PlayerY", Player.instance.transform.position.y);
+        PlayerPrefs.SetInt("Time_h", timer.h);
+        PlayerPrefs.SetInt("Time_m", timer.m);
+        PlayerPrefs.SetFloat("Time_s", timer.s);
+        PlayerPrefs.SetInt("Score", (int)Player.instance.transform.position.y);
+        SaveDataTextUpdate();
+    }
 
-        if (isHalfFhd)
-        {
-            Screen.SetResolution(1366, 768, false);
-            isHalfFhd = false;
-            halfFhdScreenButton.color = Color.white;
-        }
-        else
-        {
-            Screen.SetResolution(960, 540, false);
-            isHalfFhd = true;
-            halfFhdScreenButton.color = Color.gray;
-        }
+    public void Load()
+    {
+        loadCount++;
+        PlayerPrefs.SetInt("LoadCheck", loadCount);
+        //Fade 색
+        FadeEffect.instance.RunFade(Color.white);
+        float x = PlayerPrefs.GetFloat("PlayerX");
+        float y = PlayerPrefs.GetFloat("PlayerY");
+        Player.instance.transform.position = new Vector3(x, y, 0);
+        Player.instance.GetComponent<Rigidbody2D>().velocity = new Vector2(0, 0);
+        //시간 로드
+        int h = PlayerPrefs.GetInt("Time_h");
+        int m = PlayerPrefs.GetInt("Time_m");
+        float s = PlayerPrefs.GetFloat("Time_s");
+        timerText.GetComponent<Timer>().SetTime(h, m, s);
+        LoadDataTextUpdate();
+        
+    }
 
-
+    public void LoadButton()
+    {
+        Esc();
+        Load();
     }
 }

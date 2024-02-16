@@ -1,54 +1,71 @@
 using UnityEngine;
-using UnityEngine.UI; // UI 사용을 위해 추가
-using System.Collections; // 코루틴 사용을 위해 추가
+using UnityEngine.UI;
+using System.Collections;
+using System.Collections.Generic;
 
 public class NPCDialogue : MonoBehaviour
 {
-    public GameObject dialogueTextObject; // 대화 텍스트 오브젝트
-    public string dialogueText = "안녕하세요! NPC입니다."; // 표시할 대사
-    public Text dialogueTextComponent; // 대사를 표시할 Text 컴포넌트
+    public GameObject dialogueTextObject;
+    public List<string> dialogueTexts = new List<string> { "안녕하세요! NPC입니다.", "오늘 날씨가 참 좋네요.", "다음에 또 만나요!" }; 
+    public Text dialogueTextComponent;
+    public float sentenceDelay = 2.0f; // 대사 사이의 지연 시간
+
+    private int currentSentenceIndex = 0; 
+    private bool isPlayerNear = false;
 
     private void Start()
     {
         dialogueTextComponent = dialogueTextObject.GetComponent<Text>();
-        dialogueTextObject.SetActive(false); // 초기에는 대사를 숨김
+        dialogueTextObject.SetActive(false);
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision.CompareTag("Player")) // 플레이어와의 충돌 감지
+        if (collision.CompareTag("Player"))
         {
-            dialogueTextObject.SetActive(true); // 대사 오브젝트 활성화
-            StopAllCoroutines(); // 진행 중인 모든 코루틴을 중지 (재입장 시 중복 방지)
-            StartCoroutine(TypeSentence(dialogueText)); // 타이핑 효과 코루틴 시작
+            isPlayerNear = true;
+            dialogueTextObject.SetActive(true);
+            StopAllCoroutines();
+            StartCoroutine(DisplaySentences());
         }
     }
 
     private void OnTriggerExit2D(Collider2D collision)
     {
-        if (collision.CompareTag("Player")) // 플레이어가 떠날 때
+        if (collision.CompareTag("Player"))
         {
-            dialogueTextObject.SetActive(false); // 대사 오브젝트 비활성화
+            isPlayerNear = false;
+            dialogueTextObject.SetActive(false);
+            StopAllCoroutines(); 
+        }
+    }
+
+    IEnumerator DisplaySentences()
+    {
+        while (isPlayerNear)
+        {
+            yield return StartCoroutine(TypeSentence(dialogueTexts[currentSentenceIndex]));
+
+            currentSentenceIndex = (currentSentenceIndex + 1) % dialogueTexts.Count;
+            yield return new WaitForSeconds(sentenceDelay); // 다음 대사로 넘어가기 전에 대기
         }
     }
 
     IEnumerator TypeSentence(string sentence)
     {
-        dialogueTextComponent.text = ""; // 텍스트 초기화
+        dialogueTextComponent.text = "";
         foreach (char letter in sentence.ToCharArray())
         {
-            dialogueTextComponent.text += letter; // 한 글자씩 텍스트에 추가
-            yield return new WaitForSeconds(0.05f); // 다음 글자 타이핑 딜레이
+            dialogueTextComponent.text += letter;
+            yield return new WaitForSeconds(0.05f);
         }
     }
 
-    // Update 메서드에서 UI Text의 위치를 NPC 위로 동적으로 업데이트
     private void Update()
     {
-        
-        if (dialogueTextObject.activeSelf)
+        if (isPlayerNear)
         {
-            Vector3 screenPos = Camera.main.WorldToScreenPoint(transform.position + new Vector3(0, 0, 0)); // NPC 위의 좌표
+            Vector3 screenPos = Camera.main.WorldToScreenPoint(transform.position);
             dialogueTextObject.transform.position = screenPos;
         }
     }

@@ -19,12 +19,12 @@ public class FadeEffect : MonoBehaviour
         myImage = GetComponent<Image>();
     }
 
-    public void RunFade()
+    public void RunFade(Color c)
     {
         gameObject.SetActive(true);
-        StartCoroutine(Fade(1,0));
+        StartCoroutine(Fade(1,0,c));
     }
-    private IEnumerator Fade(float start,float end)
+    private IEnumerator Fade(float start,float end, Color c)
     {
         float currentTime = 0.0f;
         float percent = 0.0f;
@@ -32,7 +32,7 @@ public class FadeEffect : MonoBehaviour
         {
             currentTime += Time.deltaTime;
             percent = currentTime / fadeTime;
-
+            myImage.color = c;
             Color color = myImage.color;
             //color.a = Mathf.Lerp(start, end, percent);
             color.a = Mathf.Lerp(start, end, fadeCurve.Evaluate(percent));
