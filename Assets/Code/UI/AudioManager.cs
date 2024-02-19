@@ -9,7 +9,7 @@ public class AudioManager : MonoBehaviour
     // Start is called before the first frame update
     public static AudioManager instance;
     [Header("#BGM")] 
-    public AudioClip bgmClip;
+    public AudioClip[] bgmClips;
     public float bgmVolume;
     public Slider bgmSlider;
     private AudioSource bgmPlayer;
@@ -24,7 +24,7 @@ public class AudioManager : MonoBehaviour
     
     
     private bool changeable = false;
-    public enum Sfx {Jump = 0 , StartCharging , FullCharging}
+    public enum Sfx {Jump = 0 , StartCharging , FullCharging, Click}
     private void Awake()
     {
         sfxSlider.value = 0.2f;
@@ -44,7 +44,7 @@ public class AudioManager : MonoBehaviour
         bgmPlayer.playOnAwake = false;
         bgmPlayer.loop = true;
         bgmPlayer.volume = bgmVolume;
-        bgmPlayer.clip = bgmClip;
+        bgmPlayer.clip = bgmClips[0];
         
         //효과음 초기화
         GameObject sfxObject = new GameObject("SfxPlayer");
@@ -61,6 +61,10 @@ public class AudioManager : MonoBehaviour
         changeable = true;
     }
 
+    public void ChangeBgm(int stageNum)
+    {
+        bgmPlayer.clip = bgmClips[stageNum];
+    }
     public void PlayBgm(bool isPlay)
     {
         if (isPlay)

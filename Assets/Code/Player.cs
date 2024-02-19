@@ -3,6 +3,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Experimental.Rendering.Universal;
 using UnityEngine.UI;
 
 public class Player : MonoBehaviour
@@ -14,10 +15,8 @@ public class Player : MonoBehaviour
     public Vector2 direction;
     private Vector2 mousePosition;
     private Rigidbody2D playerRigidbody;
-    public float originalJumpForce;
-
+    public GameObject cutHam;
     //점프 블록 위에 있음
-    public bool onJumpBlock = false;
 
 
     // SpriteRenderer 변수 추가
@@ -32,9 +31,15 @@ public class Player : MonoBehaviour
     private void Awake()
     {
         instance = this;
-        originalJumpForce = jumpForce;
-
     }
+
+    private void OnEnable()
+    {
+        cutHam.SetActive(false);
+        Camera.main.GetComponent<PixelPerfectCamera>().enabled = true;
+    }
+
+    
 
     private void Start()
     {
@@ -55,17 +60,6 @@ public class Player : MonoBehaviour
             TEST_TP2();
         if (!GameManager.instance.isPlaying)
             return;
-        if (onJumpBlock)
-        {
-            // 시간에 따라 색상을 무지개색으로 변경
-            float colorValue = Mathf.PingPong(Time.time, 1f); // 0과 1 사이를 왕복
-            spriteRenderer.color = Color.HSVToRGB(colorValue, 0.3f, 1f);
-        }
-        else
-        {
-            // 점프 블록을 떠나면 원래 색상으로 복구
-            spriteRenderer.color = Color.white;
-        }
 
         mousePosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
         direction = mousePosition - (Vector2)transform.position;
@@ -116,20 +110,50 @@ public class Player : MonoBehaviour
             AudioManager.instance.PlaySfx(AudioManager.Sfx.Jump);
         }
     }
-    
-    
+
+
+    private void OnTriggerEnter2D(Collider2D other)
+    {
+        if (other.transform.CompareTag("Spring"))
+        {
+            AudioManager.instance.ChangeBgm(0);
+            AudioManager.instance.PlayBgm(true);
+        }
+        else if (other.transform.CompareTag("Summer"))
+        {
+            AudioManager.instance.ChangeBgm(1);
+            AudioManager.instance.PlayBgm(true);
+        }
+        else if (other.transform.CompareTag("Fall"))
+        {
+            AudioManager.instance.ChangeBgm(2);
+            AudioManager.instance.PlayBgm(true);
+        }
+        else if (other.transform.CompareTag("Winter"))
+        {
+            AudioManager.instance.ChangeBgm(3);
+            AudioManager.instance.PlayBgm(true);
+        }
+        
+    }
+
+
     public void TEST_TP()
     {
-        
+        if (GameManager.instance.TEST == 0)
+            return;
         Vector3 point = Camera.main.ScreenToWorldPoint(new Vector3(Input.mousePosition.x, 
             Input.mousePosition.y, -Camera.main.transform.position.z));
         gameObject.transform.position = point;
         
     }
 
-    private int test = 0;
+    
+    
+    //private int test = 0;
     public void TEST_TP2()
     {
+        /*
         if (test == 0)
         {
             gameObject.transform.position = new Vector3(16, 92, 0);
@@ -157,6 +181,7 @@ public class Player : MonoBehaviour
         }
 
         test++;
+        */
         
     }
     

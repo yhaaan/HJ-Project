@@ -4,9 +4,11 @@
 TagManager:
   serializedVersion: 2
   tags:
-  - CommonBlock
-  - IceBlock
   - Block
+  - Spring
+  - Summer
+  - Fall
+  - Winter
   layers:
   - Default
   - TransparentFX

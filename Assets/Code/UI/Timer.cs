@@ -6,14 +6,14 @@ using TMPro;
 public class Timer : MonoBehaviour
 {
     private string time;
-    private TMP_Text timerText;
+    private Text timerText;
     public int h;
     public int m;
     public float s;
 
     private void Awake()
     {
-        timerText = GetComponent<TMP_Text>();
+        timerText = GetComponent<Text>();
         h = 0;
         m = 0;
         s = 0;

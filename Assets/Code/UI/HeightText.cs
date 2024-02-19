@@ -6,10 +6,10 @@ using UnityEngine.UI;
 using TMPro;
 public class HeightText : MonoBehaviour
 {
-    private TMP_Text heightText;
+    private Text heightText;
     private void Awake()
     {
-        heightText = GetComponent<TMP_Text>();
+        heightText = GetComponent<Text>();
     }
 
     void Update()
